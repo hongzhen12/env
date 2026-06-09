@@ -1,0 +1,36 @@
+# put it under ~/.config/starship.toml
+
+format = """
+$docker_context\
+$conda\
+${username}\
+${custom.my_ip}\
+$directory"""
+
+#"$schema" = 'https://starship.rs/config-schema.json'
+
+# 1. 禁用默认的 username 模块
+[hostname]
+disabled = true
+
+# 2. 创建一个自定义模块获取 IP
+[custom.my_ip]
+# 获取局域网 IP 的命令 (取第一个 IP)
+command = "hostname -I | awk '{print $1}'"
+# 如果你想显示公网 IP，把 command 换成下面这句：
+# command = "curl -s ifconfig.me"
+
+when = "true" # 始终运行该命令
+symbol = ':'
+format = "[$output$symbol]($style) "
+style = "bold green"
+
+[character] # The name of the module we are configuring is 'character'
+success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+error_symbol = "[➜](bold red) "
+
+[conda]
+format = '[$symbol$environment](dimmed green) '
+
+[username]
+format = '[$user]($style)@'
